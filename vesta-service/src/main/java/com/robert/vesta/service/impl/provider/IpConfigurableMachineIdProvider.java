@@ -9,8 +9,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class IpConfigurableMachineIdProvider implements MachineIdProvider {
-    private static final Logger log = LoggerFactory
-            .getLogger(IpConfigurableMachineIdProvider.class);
+    private static final Logger log = LoggerFactory.getLogger(IpConfigurableMachineIdProvider.class);
 
     private long machineId;
 
@@ -36,18 +35,13 @@ public class IpConfigurableMachineIdProvider implements MachineIdProvider {
         }
 
         if (!ipsMap.containsKey(ip)) {
-            String msg = String
-                    .format("Fail to configure ID for host IP address %s. Stop to initialize the IpConfigurableMachineIdProvider provider.",
-                            ip);
+            String msg = String.format("Fail to configure ID for host IP address %s. Stop to initialize the IpConfigurableMachineIdProvider provider.",ip);
 
             log.error(msg);
             throw new IllegalStateException(msg);
         }
-
         machineId = ipsMap.get(ip);
-
-        log.info("IpConfigurableMachineIdProvider.init ip {} id {}", ip,
-                machineId);
+        log.info("IpConfigurableMachineIdProvider.init ip {} id {}", ip, machineId);
     }
 
     public void setIps(String ips) {

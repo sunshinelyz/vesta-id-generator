@@ -15,8 +15,7 @@ public class VestaClientTest extends AbstractTestNGSpringContextTests {
 
     @Test(groups = {"idServiceClient"})
     public void testSimple() {
-        IdService idService = (IdService) applicationContext
-                .getBean("idService");
+        IdService idService = (IdService) applicationContext.getBean("idService");
         long id = idService.genId();
         Id ido = idService.expId(id);
 

@@ -51,14 +51,12 @@ public class VestaRestNettyServerHandler extends ChannelHandlerAdapter {
 
     private static final String ACTION_MAKEID = "/makeid";
 
-    private static final Log log = LogFactory
-            .getLog(VestaRestNettyServerHandler.class);
+    private static final Log log = LogFactory.getLog(VestaRestNettyServerHandler.class);
 
     private IdService idService;
 
     public VestaRestNettyServerHandler() {
-        ApplicationContext ac = new ClassPathXmlApplicationContext(
-                "spring/vesta-rest-main.xml");
+        ApplicationContext ac = new ClassPathXmlApplicationContext("spring/vesta-rest-main.xml");
         idService = (IdService) ac.getBean("idService");
     }
 
@@ -68,8 +66,7 @@ public class VestaRestNettyServerHandler extends ChannelHandlerAdapter {
     }
 
     @Override
-    public void channelRead(ChannelHandlerContext ctx, Object msg)
-            throws Exception {
+    public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
         if (!(msg instanceof HttpRequest))
             return;
 
@@ -97,8 +94,7 @@ public class VestaRestNettyServerHandler extends ChannelHandlerAdapter {
         for (Entry<String, List<String>> attr : uriAttributes.entrySet()) {
             for (String attrVal : attr.getValue()) {
                 if (log.isDebugEnabled())
-                    log.debug("Request Parameter: " + attr.getKey() + '='
-                            + attrVal);
+                    log.debug("Request Parameter: " + attr.getKey() + '=' + attrVal);
 
                 if (ID.equals(attr.getKey())) {
                     id = Long.parseLong(attrVal);
@@ -157,18 +153,14 @@ public class VestaRestNettyServerHandler extends ChannelHandlerAdapter {
                             madeId = idService.makeId(machine, time, seq);
                         }
                     } else {
-                        madeId = idService
-                                .makeId(genmethod, machine, time, seq);
+                        madeId = idService.makeId(genmethod, machine, time, seq);
                     }
                 } else {
-                    madeId = idService.makeId(type, genmethod, machine, time,
-                            seq);
+                    madeId = idService.makeId(type, genmethod, machine, time, seq);
                 }
             } else {
-                madeId = idService.makeId(version, type, genmethod, machine,
-                        time, seq);
+                madeId = idService.makeId(version, type, genmethod, machine, time, seq);
             }
-
 
             if (log.isTraceEnabled())
                 log.trace("Id: " + madeId);
@@ -192,13 +184,10 @@ public class VestaRestNettyServerHandler extends ChannelHandlerAdapter {
         if (log.isTraceEnabled())
             log.trace("Message body: " + sbContent);
 
-        FullHttpResponse response = new DefaultFullHttpResponse(HTTP_1_1, OK,
-                Unpooled.wrappedBuffer(sbContent.toString().getBytes(
-                        Charset.forName("UTF-8"))));
+        FullHttpResponse response = new DefaultFullHttpResponse(HTTP_1_1, OK, Unpooled.wrappedBuffer(sbContent.toString().getBytes(Charset.forName("UTF-8"))));
 
         response.headers().set(CONTENT_TYPE, "text/plain");
-        response.headers().set(CONTENT_LENGTH,
-                response.content().readableBytes());
+        response.headers().set(CONTENT_LENGTH, response.content().readableBytes());
 
         boolean keepAlive = isKeepAlive(req);
 

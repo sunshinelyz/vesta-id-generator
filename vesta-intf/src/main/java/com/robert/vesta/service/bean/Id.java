@@ -13,8 +13,7 @@ public class Id implements Serializable {
     private long type;
     private long version;
 
-    public Id(long machine, long seq, long time, long genMethod, long type,
-              long version) {
+    public Id(long machine, long seq, long time, long genMethod, long type, long version) {
         super();
         this.machine = machine;
         this.seq = seq;

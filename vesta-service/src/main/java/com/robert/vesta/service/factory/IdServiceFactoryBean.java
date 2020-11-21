@@ -14,14 +14,11 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import java.beans.PropertyVetoException;
 
 public class IdServiceFactoryBean implements FactoryBean<IdService> {
-    protected final Logger log = LoggerFactory
-            .getLogger(IdServiceFactoryBean.class);
+    protected final Logger log = LoggerFactory.getLogger(IdServiceFactoryBean.class);
 
     public enum Type {
         PROPERTY, IP_CONFIGURABLE, DB
     }
-
-    ;
 
     private Type providerType;
 
@@ -43,10 +40,8 @@ public class IdServiceFactoryBean implements FactoryBean<IdService> {
     public void init() {
         if (providerType == null) {
             log.error("The type of Id service is mandatory.");
-            throw new IllegalArgumentException(
-                    "The type of Id service is mandatory.");
+            throw new IllegalArgumentException("The type of Id service is mandatory.");
         }
-
         switch (providerType) {
             case PROPERTY:
                 idService = constructPropertyIdService(machineId);
@@ -86,8 +81,7 @@ public class IdServiceFactoryBean implements FactoryBean<IdService> {
     private IdService constructIpConfigurableIdService(String ips) {
         log.info("Construct Ip Configurable IdService ips {}", ips);
 
-        IpConfigurableMachineIdProvider ipConfigurableMachineIdProvider = new IpConfigurableMachineIdProvider(
-                ips);
+        IpConfigurableMachineIdProvider ipConfigurableMachineIdProvider = new IpConfigurableMachineIdProvider(ips);
 
         IdServiceImpl idServiceImpl = new IdServiceImpl();
         idServiceImpl.setMachineIdProvider(ipConfigurableMachineIdProvider);
@@ -102,11 +96,8 @@ public class IdServiceFactoryBean implements FactoryBean<IdService> {
         return idServiceImpl;
     }
 
-    private IdService constructDbIdService(String dbUrl, String dbName,
-                                           String dbUser, String dbPassword) {
-        log.info(
-                "Construct Db IdService dbUrl {} dbName {} dbUser {} dbPassword {}",
-                dbUrl, dbName, dbUser, dbPassword);
+    private IdService constructDbIdService(String dbUrl, String dbName, String dbUser, String dbPassword) {
+        log.info("Construct Db IdService dbUrl {} dbName {} dbUser {} dbPassword {}", dbUrl, dbName, dbUser, dbPassword);
 
         ComboPooledDataSource comboPooledDataSource = new ComboPooledDataSource();
 
@@ -128,9 +119,7 @@ public class IdServiceFactoryBean implements FactoryBean<IdService> {
         comboPooledDataSource.setAcquireRetryAttempts(50);
         comboPooledDataSource.setAcquireRetryDelay(1000);
 
-        String url = String
-                .format("jdbc:mysql://%s/%s?useUnicode=true&amp;characterEncoding=UTF-8&amp;autoReconnect=true",
-                        dbUrl, dbName);
+        String url = String.format("jdbc:mysql://%s/%s?useUnicode=true&amp;characterEncoding=UTF-8&amp;autoReconnect=true", dbUrl, dbName);
 
         comboPooledDataSource.setJdbcUrl(url);
         comboPooledDataSource.setUser(dbUser);

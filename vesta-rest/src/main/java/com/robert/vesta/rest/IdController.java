@@ -48,8 +48,7 @@ public class IdController {
 
         long madeId = -1;
         if (time == -1 || seq == -1)
-            throw new IllegalArgumentException(
-                    "Both time and seq are required.");
+            throw new IllegalArgumentException("Both time and seq are required.");
         else if (version == -1) {
             if (type == -1) {
                 if (genMethod == -1) {
@@ -65,8 +64,7 @@ public class IdController {
                 madeId = idService.makeId(type, genMethod, machine, time, seq);
             }
         } else {
-            madeId = idService.makeId(version, type, genMethod, time,
-                    seq, machine);
+            madeId = idService.makeId(version, type, genMethod, time, seq, machine);
         }
 
         return madeId;

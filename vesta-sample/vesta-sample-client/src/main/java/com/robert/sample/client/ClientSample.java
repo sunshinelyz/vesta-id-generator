@@ -7,8 +7,7 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 public class ClientSample {
     public static void main(String[] args) {
-        ApplicationContext ac = new ClassPathXmlApplicationContext(
-                "spring/vesta-client-sample.xml");
+        ApplicationContext ac = new ClassPathXmlApplicationContext("spring/vesta-client-sample.xml");
         IdService idService = (IdService) ac.getBean("idService");
 
         long id = idService.genId();

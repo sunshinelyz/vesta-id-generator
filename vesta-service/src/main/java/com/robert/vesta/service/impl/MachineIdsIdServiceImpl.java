@@ -8,7 +8,6 @@ import com.robert.vesta.service.impl.provider.MachineIdsProvider;
 import com.robert.vesta.util.TimeUtils;
 
 import java.io.*;
-import java.net.URISyntaxException;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.locks.Lock;
@@ -30,8 +29,7 @@ public class MachineIdsIdServiceImpl extends IdServiceImpl {
     public void init() {
         if (!(this.machineIdProvider instanceof MachineIdsProvider)) {
             log.error("The machineIdProvider is not a MachineIdsProvider instance so that Vesta Service refuses to start.");
-            throw new RuntimeException(
-                    "The machineIdProvider is not a MachineIdsProvider instance so that Vesta Service refuses to start.");
+            throw new RuntimeException("The machineIdProvider is not a MachineIdsProvider instance so that Vesta Service refuses to start.");
         }
         super.init();
         initStoreFile();

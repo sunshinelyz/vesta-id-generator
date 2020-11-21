@@ -8,8 +8,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.util.StringUtils;
 
 public class DbMachineIdProvider implements MachineIdProvider {
-    private static final Logger log = LoggerFactory
-            .getLogger(DbMachineIdProvider.class);
+    private static final Logger log = LoggerFactory.getLogger(DbMachineIdProvider.class);
 
     private long machineId;
 
@@ -24,17 +23,13 @@ public class DbMachineIdProvider implements MachineIdProvider {
 
         if (StringUtils.isEmpty(ip)) {
             String msg = "Fail to get host IP address. Stop to initialize the DbMachineIdProvider provider.";
-
             log.error(msg);
             throw new IllegalStateException(msg);
         }
 
         Long id = null;
         try {
-            id = jdbcTemplate.queryForObject(
-                    "select ID from DB_MACHINE_ID_PROVIDER where IP = ?",
-                    new Object[]{ip}, Long.class);
-
+            id = jdbcTemplate.queryForObject("select ID from DB_MACHINE_ID_PROVIDER where IP = ?", new Object[]{ip}, Long.class);
         } catch (EmptyResultDataAccessException e) {
             // Ignore the exception
             log.error("No allocation before for ip {}.", ip);
@@ -44,28 +39,18 @@ public class DbMachineIdProvider implements MachineIdProvider {
             machineId = id;
             return;
         }
+        log.info( "Fail to get ID from DB for host IP address {}. Next step try to allocate one.", ip);
 
-        log.info(
-                "Fail to get ID from DB for host IP address {}. Next step try to allocate one.",
-                ip);
-
-        int count = jdbcTemplate
-                .update("update DB_MACHINE_ID_PROVIDER set IP = ? where IP is null limit 1",
-                        ip);
+        int count = jdbcTemplate.update("update DB_MACHINE_ID_PROVIDER set IP = ? where IP is null limit 1",  ip);
 
         if (count <= 0 || count > 1) {
-            String msg = String
-                    .format("Fail to allocte ID for host IP address {}. The {} records are updated. Stop to initialize the DbMachineIdProvider provider.",
-                            ip, count);
-
+            String msg = String.format("Fail to allocte ID for host IP address {}. The {} records are updated. Stop to initialize the DbMachineIdProvider provider.", ip, count);
             log.error(msg);
             throw new IllegalStateException(msg);
         }
 
         try {
-            id = jdbcTemplate.queryForObject(
-                    "select ID from DB_MACHINE_ID_PROVIDER where IP = ?",
-                    new Object[]{ip}, Long.class);
+            id = jdbcTemplate.queryForObject("select ID from DB_MACHINE_ID_PROVIDER where IP = ?", new Object[]{ip}, Long.class);
 
         } catch (EmptyResultDataAccessException e) {
             // Ignore the exception
@@ -73,14 +58,10 @@ public class DbMachineIdProvider implements MachineIdProvider {
         }
 
         if (id == null) {
-            String msg = String
-                    .format("Fail to get ID from DB for host IP address {} after allocation. Stop to initialize the DbMachineIdProvider provider.",
-                            ip);
-
+            String msg = String.format("Fail to get ID from DB for host IP address {} after allocation. Stop to initialize the DbMachineIdProvider provider.", ip);
             log.error(msg);
             throw new IllegalStateException(msg);
         }
-
         machineId = id;
     }
 

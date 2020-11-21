@@ -5,8 +5,7 @@ import io.netty.channel.ChannelPipeline;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.handler.codec.http.HttpServerCodec;
 
-public class VestaRestNettyServerInitializer extends
-        ChannelInitializer<SocketChannel> {
+public class VestaRestNettyServerInitializer extends  ChannelInitializer<SocketChannel> {
     private VestaRestNettyServerHandler handler = new VestaRestNettyServerHandler();
 
     @Override

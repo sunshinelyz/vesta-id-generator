@@ -7,8 +7,7 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 public class EmbedSample {
     public static void main(String[] args) {
-        ApplicationContext ac = new ClassPathXmlApplicationContext(
-                "spring/vesta-service-sample.xml");
+        ApplicationContext ac = new ClassPathXmlApplicationContext("spring/vesta-service-sample.xml");
         IdService idService = (IdService) ac.getBean("idService");
 
         long id = idService.genId();

@@ -10,8 +10,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 public class VestaRestNettyServer {
-    private static final Log log = LogFactory
-            .getLog(VestaRestNettyServer.class);
+    private static final Log log = LogFactory.getLog(VestaRestNettyServer.class);
 
     private final int port;
 

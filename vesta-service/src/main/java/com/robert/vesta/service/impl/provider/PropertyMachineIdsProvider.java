@@ -9,7 +9,7 @@ public class PropertyMachineIdsProvider implements MachineIdsProvider {
     }
 
     public long getMachineId() {
-        return machineIds[currentIndex++%machineIds.length];
+        return machineIds[currentIndex++ % machineIds.length];
     }
 
     public void setMachineIds(long[] machineIds) {

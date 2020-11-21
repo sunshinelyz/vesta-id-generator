@@ -47,9 +47,7 @@ public abstract class AbstractIdServiceImpl implements IdService {
 
         if (machineId < 0) {
             log.error("The machine ID is not configured properly so that Vesta Service refuses to start.");
-
-            throw new IllegalStateException(
-                    "The machine ID is not configured properly so that Vesta Service refuses to start.");
+            throw new IllegalStateException("The machine ID is not configured properly so that Vesta Service refuses to start.");
 
         }
         if(this.idMeta == null){
@@ -94,7 +92,6 @@ public abstract class AbstractIdServiceImpl implements IdService {
         } else if (idType == IdType.MIN_GRANULARITY) {
             return new Date(time + TimeUtils.EPOCH);
         }
-
         return null;
     }
 
@@ -115,21 +112,16 @@ public abstract class AbstractIdServiceImpl implements IdService {
         return makeId(type, genMethod, time, seq, machine);
     }
 
-    public long makeId(long type, long genMethod, long time,
-                       long seq, long machine) {
+    public long makeId(long type, long genMethod, long time, long seq, long machine) {
         return makeId(version, type, genMethod, time, seq, machine);
     }
 
-    public long makeId(long version, long type, long genMethod,
-                       long time, long seq, long machine) {
+    public long makeId(long version, long type, long genMethod,long time, long seq, long machine) {
         IdType idType = IdType.parse(type);
-
         Id id = new Id(machine, seq, time, genMethod, type, version);
         IdConverter idConverter = new IdConverterImpl(idType);
-
         return idConverter.convert(id);
     }
-
 
     public void setMachineId(long machineId) {
         this.machineId = machineId;
